@@ -2,7 +2,7 @@ import requests
 GITHUB_API_URL = "https://api.github.com/repos/abhi2k19/Python-for-DevOps/pulls"
 
 # Optional: Use a GitHub personal access token for higher rate limits (set in environment or directly here)
-'''GITHUB_TOKEN = "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"
+'''GITHUB_TOKEN = "fdghjk"
 
 
 # Headers for authentication (if token is used)
