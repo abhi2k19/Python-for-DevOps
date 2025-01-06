@@ -2,14 +2,14 @@ import requests
 GITHUB_API_URL = "https://api.github.com/repos/abhi2k19/Python-for-DevOps/pulls"
 
 # Optional: Use a GitHub personal access token for higher rate limits (set in environment or directly here)
-'''GITHUB_TOKEN = "fdghjk"
+#GITHUB_TOKEN = ""
 
 
 # Headers for authentication (if token is used)
-headers = {}
-if GITHUB_TOKEN:
-    headers["Authorization"] = f"token {GITHUB_TOKEN}"
-'''
+# headers = {}
+# if GITHUB_TOKEN:
+#     headers["Authorization"] = f"token {GITHUB_TOKEN}"
+
 def get_github_api_response():
     try:
         response = requests.get(GITHUB_API_URL)
