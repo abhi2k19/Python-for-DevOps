@@ -1,0 +1,90 @@
+# Python related
+# Ignore Python virtual environments
+env_01/
+env_02/
+python/env_01/
+python/env_02/
+
+# Ignore system files
+*.pyc
+__pycache__/
+*.pyo
+*.log
+
+_pycache_/
+*.py[cod]
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.log
+*.env
+.env/
+.venv/
+venv/
+*.egg
+*.egg-info/
+dist/
+build/
+*.ipynb_checkpoints
+.DS_Store
+
+# Byte-compiled / optimized / DLL files
+_pycache_/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Pytest and coverage
+.cache
+pytest_cache/
+*.cover
+coverage.*
+*.py,cover
+.hypothesis/
+.tox/
+.nox/
+
+# Terraform related
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore Terraform plan files
+*.tfplan
+*.tfvars
+*.tfvars.json
+
+# General system files
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+*.bak
+*.tmp
+
+# Logs and debugging files
+*.log
+*.bak
+*.tmp
+
+# Specific tools
+.idea/
+.vscode/
+*.iml
