@@ -2,15 +2,18 @@ from flask import Flask, request, jsonify
 import json
 import requests
 import base64
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
-# GitHub and Jira credentials
-GITHUB_SECRET = "your_github_webhook_secret"  # Set this in your webhook
-JIRA_API_TOKEN = "your_jira_api_token"
-JIRA_EMAIL = "your_email@example.com"
-JIRA_DOMAIN = "your_jira_domain"  # e.g., "yourcompany.atlassian.net"
-JIRA_PROJECT_KEY = "PROJ"  # Replace with your Jira project key
+load_dotenv()
+
+GITHUB_SECRET = os.getenv("GITHUB_SECRET")
+JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
+JIRA_EMAIL = os.getenv("JIRA_EMAIL")
+JIRA_DOMAIN = os.getenv("JIRA_DOMAIN")
+JIRA_PROJECT_KEY = os.getenv("JIRA_PROJECT_KEY")
 
 # Jira headers
 JIRA_HEADERS = {
@@ -18,12 +21,21 @@ JIRA_HEADERS = {
     "Content-Type": "application/json"
 }
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/createJira', methods=['POST'])
+
 def github_webhook():
+    # Log the incoming request for debugging
+    print("Received GitHub webhook request")
+    #print(f"Request Method: {request.method}")
+    #print(f"Request Data: {request.data}")
+    print(f"Headers: {request.headers}")
+    print(f"Payload: {json.dumps(request.json, indent=4)}")
+    
     # Verify GitHub signature (optional, but recommended)
-    signature = request.headers.get('X-Hub-Signature-256')
+    '''signature = request.headers.get('X-Hub-Signature-256')
     if not verify_signature(signature, request.data):
         return jsonify({"error": "Invalid signature"}), 401
+        '''
 
     # Parse the GitHub webhook payload
     event = request.headers.get('X-GitHub-Event')
@@ -35,13 +47,13 @@ def github_webhook():
     return jsonify({"status": "success"}), 200
 
 
-def verify_signature(signature, payload):
+'''def verify_signature(signature, payload):
     """Verify GitHub webhook signature (optional for security)."""
     import hmac
     import hashlib
     computed_signature = 'sha256=' + hmac.new(GITHUB_SECRET.encode(), payload, hashlib.sha256).hexdigest()
     return hmac.compare_digest(computed_signature, signature)
-
+'''
 
 def handle_issue_comment(payload):
     """Handle GitHub issue comment events."""
@@ -67,12 +79,30 @@ def handle_issue_comment(payload):
 
 def create_jira_issue(title, description):
     """Create a new issue in Jira."""
-    jira_url = f"https://{JIRA_DOMAIN}/rest/api/3/issue"
+    jira_url = f"{JIRA_DOMAIN}/rest/api/3/issue"
+    
+    # Format the description in Atlassian Document Format (ADF)
+    description_adf = {
+        "type": "doc",
+        "version": 1,
+        "content": [
+            {
+                "type": "paragraph",
+                "content": [
+                    {
+                        "text": description,
+                        "type": "text"
+                    }
+                ]
+            }
+        ]
+    }
+    
     issue_data = {
         "fields": {
             "project": {"key": JIRA_PROJECT_KEY},
             "summary": title,
-            "description": description,
+            "description": description_adf,  # Use the ADF formatted description
             "issuetype": {"name": "Task"}  # Use the appropriate issue type
         }
     }

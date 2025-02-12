@@ -1,0 +1,14 @@
+---   # Starts with 3 --- 
+name: Abhijith
+age: 25
+married: True 
+Tasks:   # List , 2 space - space 
+  - work
+  - gym
+  - sleep
+  - eat
+  - repeat
+Address: # Dictionary
+  street: peruva
+  state: kerala
+  pin: 686610

@@ -1,0 +1,23 @@
+---
+# - name: update the instance
+#   hosts: app
+#   remote_user: root 
+  
+
+  - name: Apache2 installation
+    hosts: all
+    become: True
+    Tasks:
+      - name: install apcahe httpd
+        ansible.builtin.apt:
+          name: Apache2
+          state: present
+          update_cache: yes
+      - name: Copy file with owner and permissions
+        ansible.builtin.copy:
+          src: C:/Users/ABHIJITH%20AS/OneDrive/Documents/index.html
+          dest: /var/www/html/index.html
+          owner: root
+          group: root
+          mode: '0644'
+      - name: start the service
